@@ -1,0 +1,32 @@
+version: '3'
+services:
+  database:
+    image: postgres:latest
+    container_name: money-tracker-database
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - database_data:/data/db
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+    command: pnpm start:dev
+    container_name: money-tracker-app
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+
+volumes:
+  database_data:
