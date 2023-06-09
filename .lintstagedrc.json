@@ -1,4 +1,4 @@
 {
-  "*.ts": ["eslint --fix"],
+  "*.ts": ["pnpm lint", "pnpm test:staged"],
   "*.{json,md}": "prettier --write"
 }

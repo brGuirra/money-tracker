@@ -18,8 +18,20 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-member-accessibility': [
+      'error',
+      { overrides: { constructors: 'off' } },
+    ],
+    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/ban-types': 'error',
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        fixStyle: 'separate-type-imports',
+      },
+    ],
   },
 };
