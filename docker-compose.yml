@@ -5,6 +5,8 @@ services:
     container_name: money-tracker-database
     ports:
       - 5432:5432
+    env_file:
+      - .development.env
     environment:
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USERNAME}
@@ -24,7 +26,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - .env
+      - .development.env
     environment:
       - DATABASE_URL=postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:5432/${DATABASE_NAME}?schema=public
     volumes:
