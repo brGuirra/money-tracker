@@ -1,9 +1,6 @@
--- Add UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- CreateTable
 CREATE TABLE "accounts" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "name" VARCHAR NOT NULL,
     "type" VARCHAR NOT NULL,
@@ -16,7 +13,7 @@ CREATE TABLE "accounts" (
 
 -- CreateTable
 CREATE TABLE "categories" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "name" VARCHAR NOT NULL,
     "updated_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -27,7 +24,7 @@ CREATE TABLE "categories" (
 
 -- CreateTable
 CREATE TABLE "entries" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "account_id" UUID NOT NULL,
     "category_id" UUID NOT NULL,
     "entry_date" DATE NOT NULL,
@@ -41,7 +38,7 @@ CREATE TABLE "entries" (
 
 -- CreateTable
 CREATE TABLE "installments" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "entry_id" UUID NOT NULL,
     "amount" BIGINT NOT NULL,
     "billing_date" DATE NOT NULL,
@@ -53,7 +50,8 @@ CREATE TABLE "installments" (
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "name" VARCHAR NOT NULL,
     "email" VARCHAR NOT NULL,
     "password" VARCHAR NOT NULL,
     "updated_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -79,4 +77,3 @@ ALTER TABLE "entries" ADD CONSTRAINT "entries_categories" FOREIGN KEY ("category
 
 -- AddForeignKey
 ALTER TABLE "installments" ADD CONSTRAINT "installments_entries" FOREIGN KEY ("entry_id") REFERENCES "entries"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
-

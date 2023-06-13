@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Account {
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String   @map("user_id") @db.Uuid
   name      String   @db.VarChar
   type      String   @db.VarChar
@@ -23,7 +23,7 @@ model Account {
 }
 
 model Category {
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String   @map("user_id") @db.Uuid
   name      String   @db.VarChar
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
@@ -35,7 +35,7 @@ model Category {
 }
 
 model Entry {
-  id           String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   accountId    String        @map("account_id") @db.Uuid
   categoryId   String        @map("category_id") @db.Uuid
   entryDate    DateTime      @map("entry_date") @db.Date /// The date the entry occurred
@@ -51,7 +51,7 @@ model Entry {
 }
 
 model Installment {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   entryId     String   @map("entry_id") @db.Uuid
   amount      BigInt
   billingDate DateTime @map("billing_date") @db.Date /// The billing date for an installment
@@ -63,7 +63,8 @@ model Installment {
 }
 
 model User {
-  id         String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String     @db.VarChar
   email      String     @unique @db.VarChar
   password   String     @db.VarChar
   updatedAt  DateTime   @default(now()) @map("updated_at") @db.Timestamp(6)

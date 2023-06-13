@@ -29,6 +29,7 @@
     "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.4.2",
     "@nestjs/platform-express": "^9.4.2",
+    "@nestjs/swagger": "^6.3.0",
     "@prisma/client": "^4.15.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -36,9 +37,11 @@
     "pino-http": "^8.3.3",
     "pino-pretty": "^10.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@nestjs/cli": "^9.5.0",
     "@nestjs/schematics": "^9.2.0",
     "@nestjs/testing": "^9.4.2",
@@ -80,9 +83,17 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@modules/(.*)": [
+        "<rootDir>/modules/$1"
+      ],
+      "^@common/(.*)": [
+        "<rootDir>/common/$1"
+      ]
+    }
   },
   "prisma": {
-    "schema": "src/common/database/schema/schema.prisma"
+    "schema": "src/common/database/prisma/schema.prisma"
   }
 }
