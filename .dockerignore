@@ -1,11 +1,3 @@
-.git
 node_modules
 dist
-.eslint*
-.prettier*
-.gitignore
-.husky
-Dockerfile
-.dockerignore
-docker-compose.yml
-README.md
+

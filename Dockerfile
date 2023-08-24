@@ -9,11 +9,7 @@ WORKDIR /usr/src/app
 COPY --chown=node:node package.json ./
 COPY --chown=node:node pnpm-lock.yaml ./
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-ENV PNPM_HOME=/usr/local/bin
-
-RUN pnpm add -g dotenv-cli
+RUN npm install -g pnpm
 
 RUN pnpm install
 
@@ -40,12 +36,6 @@ COPY --chown=node:node pnpm-lock.yaml ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
 COPY --chown=node:node . .
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-ENV PNPM_HOME=/usr/local/bin
-
-RUN pnpm add -g dotenv-cli
 
 RUN pnpm build
 

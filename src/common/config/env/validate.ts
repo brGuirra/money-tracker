@@ -1,6 +1,8 @@
 import { plainToClass } from 'class-transformer';
-import { EnvironmentVariables } from './environment-variables';
 import { validateSync } from 'class-validator';
+
+// Models
+import { EnvironmentVariables } from './environment-variables';
 
 export function validate(
   config: Record<string, unknown>,

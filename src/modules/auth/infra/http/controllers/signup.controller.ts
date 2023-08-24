@@ -1,4 +1,3 @@
-import { SignupUseCase } from '@modules/auth/domain/usecases';
 import {
   Body,
   Controller,
@@ -9,6 +8,9 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
+
+// Models
+import { SignupUseCase } from '@modules/auth/domain/usecases';
 import { SignupOutputDto, SignupInputDto } from '../dtos';
 
 @Controller('/v1/auth')

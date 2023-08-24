@@ -1,9 +1,10 @@
-import type { UserModel } from '@modules/auth/domain/models';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
-export class SignupOutputDto
-  implements Omit<UserModel, 'password' | 'createdAt' | 'updatedAt'>
-{
+// Models
+import type { UserModel } from '@modules/auth/domain/models';
+
+export class SignupOutputDto implements UserModel {
   @ApiProperty({
     description: "User's ID",
     type: 'string',
@@ -27,4 +28,13 @@ export class SignupOutputDto
     example: 'johndoe@email.com',
   })
   public readonly email: string;
+
+  @Exclude()
+  public readonly password: string;
+
+  @Exclude()
+  public readonly updatedAt: Date;
+
+  @Exclude()
+  public readonly createdAt: Date;
 }

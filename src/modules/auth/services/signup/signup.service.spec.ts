@@ -1,9 +1,13 @@
+import { Test } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
+
+// Services
+import { SignupService } from './signup.service';
+
+// Models
 import type { CreateUser, UserModel } from '@modules/auth/domain/models';
 import { UserRepository } from '@modules/auth/domain/repositories';
-import type { TestingModule } from '@nestjs/testing';
-import { Test } from '@nestjs/testing';
-import { SignupService } from './signup.service';
 
 describe('SigupService', () => {
   let service: SignupService;
@@ -55,13 +59,12 @@ describe('SigupService', () => {
     );
   });
 
-  it('should throw when Prisma throws', async () => {
+  it('should throw when UserRepository throws', async () => {
     const data: CreateUser = {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
     };
-
     const error = new Error(faker.lorem.word());
 
     jest.spyOn(userRepository, 'create').mockRejectedValueOnce(error);

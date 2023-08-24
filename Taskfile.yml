@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  dev:
+    env:
+      NODE_ENV: development
+    dotenv: ['.env.{{.ENV}}']
+    cmds:
+      - docker-compose --env-file ./.env.$NODE_ENV up -d database app
+      - pnpm prisma:migrate:dev
+  test-e2e:
+    env:
+      NODE_ENV: test
+    dotenv: ['.env.{{.ENV}}']
+    cmds:
+      - docker-compose --env-file ./.env.$NODE_ENV up -d database-test
+      - dotenv -e .env.$NODE_ENV -- pnpm prisma generate
+      - dotenv -e .env.$NODE_ENV -- pnpm prisma migrate deploy
+      - dotenv -e .env.$NODE_ENV -- pnpm jest --runInBand --passWithNoTests --config ./test/jest-e2e.json {{.CLI_ARGS}}
+      - docker-compose --env-file ./.env.$NODE_ENV stop database-test

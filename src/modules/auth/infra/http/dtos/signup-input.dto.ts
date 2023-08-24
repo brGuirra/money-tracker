@@ -1,6 +1,8 @@
-import type { CreateUser } from '@modules/auth/domain/models';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+
+// Models
+import type { CreateUser } from '@modules/auth/domain/models';
 
 export class SignupInputDto implements CreateUser {
   @ApiProperty({
@@ -32,5 +34,7 @@ export class SignupInputDto implements CreateUser {
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
     example: 'StrongPassword@123',
   })
+  @IsString()
+  @IsNotEmpty()
   public readonly password: string;
 }

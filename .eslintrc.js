@@ -27,6 +27,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/ban-types': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-imports': [
       'error',
       {

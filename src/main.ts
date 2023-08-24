@@ -1,24 +1,42 @@
 import { NestFactory } from '@nestjs/core';
 import { Logger } from 'nestjs-pino';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+// Modules
+import { AppModule } from './app.module';
+
+// Models
+import type { EnvironmentVariables } from '@common/config/env';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-  const config = new DocumentBuilder()
+  const configService =
+    app.get<ConfigService<EnvironmentVariables>>(ConfigService);
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('Money Tracker')
     .setDescription('The Money Tracker API description')
     .setVersion('0.1')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
 
   app.useLogger(app.get(Logger));
+  app.setGlobalPrefix('api');
 
-  SwaggerModule.setup('api', app, document);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      stopAtFirstError: true,
+      whitelist: true,
+      errorHttpStatusCode: 422,
+    }),
+  );
 
-  await app.listen(3000);
+  SwaggerModule.setup('api/docs', app, document);
+
+  await app.listen(configService.get('PORT') || 3000);
 }
 
 void bootstrap();
